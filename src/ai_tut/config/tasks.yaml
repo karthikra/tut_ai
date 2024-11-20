@@ -21,14 +21,14 @@ tasks:
     agent: ai_prompt_scorer
     expected_output: "An objective rating between 1 and 10 for each of the criteria Clarity, Specificity and Effectiveness and constructive feedback on the prompt's quality, with insights on how to enhance it."
 
-  prompt_rewriting:
+  prompt_rewrite:
     description: "Rewrite the given {prompt} making it suitable for an LLM to understand better."
     agent: ai_prompt_rewriter
     expected_output: "A rewritten version of the {prompt} that is clearer, more specific, and more effective for an LLM to understand. 
     With atleast three examples of how the prompt can be improved."
 
   badge_making:
-    description: "Generate a badge for the user based on their performance in the prompt scoring task with the {score} as the main criteria.
-    The badge should be colorful and fun and should be {score} sided figure, with a congratulatory message for the user's performance."
+    description: "Generate a badge for the user based on their performance in the prompt scoring task with the 5 as the main criteria.
+    The badge should be colorful and fun and should be 5 sided figure, with a congratulatory message for the user's performance."
     agent: ai_badge_maker
-    expected_output: "A badge with the user's score and a congratulatory message for their performance in the prompt scoring task. A very fun colorfull badge."
+    expected_output: "A url of the image with the user's score and a congratulatory message for their performance in the prompt scoring task. A very fun colorful badge."

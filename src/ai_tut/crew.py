@@ -3,7 +3,7 @@ import yaml
 from crewai import Agent, Crew, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import DallETool
-from googleapiclient.mimeparse import quality
+from crewai.flow.flow import listen, start, and_, or_, router
 
 from src.models.response_models import PromptFeedback, CareerAdvice, JobAdvice, PromptScore, PromptRewrite, Badge
 
@@ -40,14 +40,15 @@ class AIPromptingTutorCrew():
     def ai_prompt_rewrite(self) -> Agent:
         # Initialize the agent using the configuration
         return Agent(
-            config=self.agents_config['ai_prompt_rewrite'],
+            config=self.agents_config['ai_prompt_rewriter'],
             verbose=True
         )
     def ai_badge_maker(self) -> Agent:
         # Initialize the agent using the configuration
         return Agent(
             config=self.agents_config['ai_badge_maker'],
-            tool = DallETool(model='dall-e-3',size='256X256',quality='standard',n=1),
+            tools = [DallETool()],
+            allow_delegation=False,
             verbose=True
         )
 
@@ -95,19 +96,26 @@ class AIPromptingTutorCrew():
             output_pydantic= PromptRewrite
         )
     @task
+    @listen(prompt_scoring_task)
     def badge_task(self) -> Task:
         # Initialize the field-specific suggestions task
         return Task(
             config=self.tasks_config['tasks']['badge_making'],
             agent=self.ai_badge_maker(),
-            output_pydantic= Badge
+            context = [self.prompt_scoring_task()],
+            output_pydantic=Badge,
         )
 
     @crew
     def crew(self) -> Crew:
         # Set up the crew with the agent and tasks
         return Crew(
-            agents=[self.ai_tutor(),self.ai_prompt_scorer(),self.ai_badge_maker(),self.ai_prompt_rewrite()],
+            agents=[
+                self.ai_tutor(),
+                self.ai_prompt_scorer(),
+                self.ai_badge_maker(),
+                self.ai_prompt_rewrite()
+                    ],
             tasks=[
                 self.prompt_refinement_task(),
                 self.career_advice_task(),
@@ -116,7 +124,7 @@ class AIPromptingTutorCrew():
                 self.badge_task(),
                 self.prompt_rewrite_task()
             ],
-            # process="sequential",
+            process="sequential",
             verbose=True
         )
 
