@@ -1,0 +1,34 @@
+tasks:
+  prompt_refinement:
+    description: "Critique the prompt {prompt} provided by the user to a LLM for clarity, specificity, and effectiveness. 
+    Highlight the positives and negatives of the prompt and suggest improvements with examples."
+    agent: ai_tutor
+    expected_output: "Constructive feedback on each {prompt}, with suggestions for improvement and a counter example."
+
+  career_advice:
+    description: "Provide career guidance based on the user's current {current_role} and the {career_path} they have specified they want to take."
+    agent: ai_tutor
+    expected_output: "Personalized career advice, including job role suggestions and skill development tips."
+
+  field_suggestions:
+    description: "Offer AI-driven improvement ideas and suggestions for specific {field}."
+    agent: ai_tutor
+    expected_output: "Actionable AI applications and optimizations tailored to the user's designated {field}."
+
+  prompt_scoring:
+    description: "Score the prompt {prompt} provided by the user on a scale of 1 to 10 for Clarity,  1 to 10 Specificity, and  1 to 10 Effectiveness.
+    With a detailed explanation of the rating and constructive feedback on how to enhance the prompt."
+    agent: ai_prompt_scorer
+    expected_output: "An objective rating between 1 and 10 for each of the criteria Clarity, Specificity and Effectiveness and constructive feedback on the prompt's quality, with insights on how to enhance it."
+
+  prompt_rewriting:
+    description: "Rewrite the given {prompt} making it suitable for an LLM to understand better."
+    agent: ai_prompt_rewriter
+    expected_output: "A rewritten version of the {prompt} that is clearer, more specific, and more effective for an LLM to understand. 
+    With atleast three examples of how the prompt can be improved."
+
+  badge_making:
+    description: "Generate a badge for the user based on their performance in the prompt scoring task with the {score} as the main criteria.
+    The badge should be colorful and fun and should be {score} sided figure, with a congratulatory message for the user's performance."
+    agent: ai_badge_maker
+    expected_output: "A badge with the user's score and a congratulatory message for their performance in the prompt scoring task. A very fun colorfull badge."

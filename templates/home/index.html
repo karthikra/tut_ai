@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run AI Tasks with HTMX</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script> <!-- Load HTMX -->
+</head>
+<body>
+    <h1>Run AI Tasks</h1>
+    <form id="taskForm" hx-post="http://127.0.0.1:8000/run-tasks/" hx-target="#responseOutput" hx-trigger="submit">
+        <label for="prompt">Prompt:</label>
+        <input type="text" id="prompt" name="prompt" value="How can I improve my project proposals?" required><br><br>
+
+        <label for="career_path">Career Path:</label>
+        <input type="text" id="career_path" name="career_path" value="Data Scientist" required><br><br>
+
+        <label for="current_role">Current Role:</label>
+        <input type="text" id="current_role" name="current_role" value="Drunkard" required><br><br>
+
+        <label for="field">Field:</label>
+        <input type="text" id="field" name="field" value="Marketing" required><br><br>
+
+        <button type="submit">Run Tasks</button>
+    </form>
+
+    <h2>Response:</h2>
+    <pre id="responseOutput"></pre>
+</body>
+</html>
